@@ -20,11 +20,23 @@ namespace CarPass.Spatial.Services
         string mDatabase = "spatial";
         string mGeolocations = "geolocations";
 
-        public GeolocationsMongoDB(string server = "localhost", int port = 27017)
+        public GeolocationsMongoDB()
+            : this("localhost", 27017)
         {
-            mMongo = MongoServer.Create("mongodb://" + server);
+            
+        }
+
+        public GeolocationsMongoDB(string server)
+            : this(server, 27017)
+        {
+            
+        }
+
+        public GeolocationsMongoDB(string server, int port)
+        {
             Server = server;
             Port = port;
+            mMongo = MongoServer.Create("mongodb://" + Server);
         }
 
         public IList<GeoPointDto> GetLocationsByDeviceSN(string deviceSN, DateTime fromTime, DateTime toTime)
