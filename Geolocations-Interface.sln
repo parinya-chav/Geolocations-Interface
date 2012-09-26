@@ -5,19 +5,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarPass.Spatial.Interface",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarPass.Spatial.Interface.Test", "CarPass.Spatial.Interface.Test\CarPass.Spatial.Interface.Test.csproj", "{919A8BA3-E69B-4C41-982A-03AFE1AE2D4D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DB7F619F-B03B-4804-B776-1B924BF90909}"
-	ProjectSection(SolutionItems) = preProject
-		Geolocations-Interface.vsmdi = Geolocations-Interface.vsmdi
-		Local.testsettings = Local.testsettings
-		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarPass.Spatial.Services", "CarPass.Spatial.Services\CarPass.Spatial.Services.csproj", "{A87E956B-5E25-4811-A6A3-F4335EF9208C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3162417A-5B3B-425C-B1E9-12546AE4BAE9}"
+	ProjectSection(SolutionItems) = preProject
+		sonar-project.properties = sonar-project.properties
+	EndProjectSection
+EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = Geolocations-Interface.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
