@@ -40,7 +40,7 @@ namespace CarPass.Spatial.Interface.Dto
         public short Altitude { get; set; }
 
         [DataMember]
-        public ushort GroundSpeed { get; set; }
+        public ushort Groundspeed { get; set; }
 
         [DataMember]
         public byte NumberOfSatellitesUsed { get; set; }

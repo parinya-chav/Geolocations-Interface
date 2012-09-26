@@ -16,7 +16,6 @@ namespace CarPass.Spatial.Interface.Test
         public void SetUp()
         {
             mongoGeolocations = new GeolocationsMongoDB("appsit01");
-
         }
 
         [Test]
@@ -28,7 +27,9 @@ namespace CarPass.Spatial.Interface.Test
         [Test]
         public void TestGetLocationsByImei()
         {
-
+            var locations = mongoGeolocations.GetLocationsByImei("13845257385757011", new DateTime(2012, 9, 10, 0, 0, 1), new DateTime(2012, 9, 10, 23, 59, 59));
+            var count = locations.ToList().Count;
+            Assert.AreNotEqual(0, count);
         }
     }
 }

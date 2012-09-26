@@ -8,6 +8,11 @@ namespace CarPass.Spatial.Interface.Test
 {
     using NMock2;
     using CarPass.Spatial.Interface.Dto;
+    using CarPass.Spatial.Services.Models;
+    using MongoDB.Driver;
+    using MongoDB.Driver.Builders;
+    using MongoDB.Bson.Serialization;
+    using Newtonsoft.Json;
 
     [TestClass]
     public class MockeryGeolocationsTest
@@ -46,5 +51,33 @@ namespace CarPass.Spatial.Interface.Test
             });
         }
 
+        [TestMethod]
+        public void TestMongoServer()
+        {
+            //BsonClassMap.RegisterClassMap<Geolocation>();
+
+           // places.EnsureIndex(IndexKeys.GeoSpatial("loca"));
+            var mongo = MongoServer.Create("mongodb://appsit01");
+            var database = mongo.GetDatabase("spatial");
+
+            using (mongo.RequestStart(database))
+            {
+                var geolocations = database.GetCollection <Geolocation>("geolocations");
+
+                var query = Query.And(
+                        Query.EQ("Imei", "13845257385757011"),
+                        Query.GTE("CreateDate", new DateTime(2012, 9, 10, 0, 0, 1)),
+                        Query.LTE("CreateDate", new DateTime(2012, 9, 10, 23, 59, 59)));
+
+                var c = geolocations.Find(query).ToList();
+
+                c.ForEach(d =>
+                {
+                    dynamic loc = JsonConvert.DeserializeObject(d.Location);
+                    Console.WriteLine("{0}", loc.lat);
+                });
+            }
+
+        }
     }
 }
