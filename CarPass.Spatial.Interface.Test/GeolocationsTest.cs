@@ -15,7 +15,7 @@ namespace CarPass.Spatial.Interface.Test
         [SetUp]
         public void SetUp()
         {
-            mongoGeolocations = new GeolocationsMongoDB("appsit01");
+            mongoGeolocations = new GeolocationsMongoDB("localhost");
         }
 
         [Test]

@@ -20,14 +20,9 @@ namespace CarPass.Spatial.Services
         string mDatabase = "spatial";
         string mGeolocations = "spatial";
 
-        public GeolocationsMongoDB()
-        {
-            mMongo = MongoServer.Create("mongodb://appsit01");
-
-        }
-
         public GeolocationsMongoDB(string server = "localhost", int port = 27017)
         {
+            mMongo = MongoServer.Create("mongodb://" + server);
             Server = server;
             Port = port;
         }
