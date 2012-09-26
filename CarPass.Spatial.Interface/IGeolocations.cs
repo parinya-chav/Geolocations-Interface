@@ -33,6 +33,5 @@ namespace CarPass.Spatial.Interface
         /// <returns>List of Geolocations</returns>
         [OperationContract]
         IList<GeoPointDto> GetLocationsByImei(string imei, DateTime fromTime, DateTime toTime);
-
     }
 }

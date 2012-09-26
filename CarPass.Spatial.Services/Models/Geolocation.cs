@@ -34,7 +34,9 @@ namespace CarPass.Spatial.Services.Models
 
         public string PacketId { get; set; }
         public string Imei { get; set; }
-        public ushort GroundSpeed { get; set; }
+
+        [BsonElement("GroundSpeed")]
+        public ushort Groundspeed { get; set; }
         public decimal Hdop { get; set; }
         public ushort Heading { get; set; }
         public int JourneyId { get; set; }
@@ -58,49 +60,5 @@ namespace CarPass.Spatial.Services.Models
 
         [BsonElement("loc")]
         public string Location { get; internal set; }
-    }
-
-    public static class GeolocationExtension
-    {
-        public static IList<GeoPointDto> ToGeoPointDto(this IList<Geolocation> geolocationList)
-        {
-            IList<GeoPointDto> result = new List<GeoPointDto>();
-
-            geolocationList.ToList().ForEach(geoPointMsg =>
-            {
-
-                dynamic loc = JsonConvert.DeserializeObject(geoPointMsg.Location);
-
-                var geoPointDto = new GeoPointDto
-                {
-                    DeviceSn = geoPointMsg.DeviceSN,
-                    UniqueJournyId = (ushort)geoPointMsg.JourneyId,
-                    Seq = geoPointMsg.Seq,
-
-                    Latitude = loc.lat,
-                    Longitude = loc.lon,
-
-                    Altitude = geoPointMsg.Altitude,
-                    Groundspeed = geoPointMsg.GroundSpeed,
-                    NumberOfSatellitesUsed = geoPointMsg.NumberOfSatellitesUsed,
-                    Heading = geoPointMsg.Heading,
-                    CreateDate = geoPointMsg.CreateDate,
-
-                    UtcTime = geoPointMsg.UtcTime,
-                    FromDate = geoPointMsg.UtcTime.ToLocalTime(),
-                    ToDate = geoPointMsg.UtcTime.ToLocalTime(),
-
-                    FromMessage = geoPointMsg.Message,
-                    FromMessageJson = geoPointMsg.MessageJson,
-
-                    MapId = geoPointMsg.MapId,
-
-                };
-
-                result.Add(geoPointDto);
-            });
-            return result;
-        }
-
     }
 }
