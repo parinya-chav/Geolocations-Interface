@@ -29,7 +29,22 @@ namespace CarPass.Spatial.Services
 
         public IList<GeoPointDto> GetLocationsByDeviceSN(string deviceSN, DateTime fromTime, DateTime toTime)
         {
-            throw new NotImplementedException();
+            IList<GeoPointDto> result = null;
+            var database = mMongo.GetDatabase(mDatabase);
+            using (mMongo.RequestStart(database))
+            {
+                var geolocations = database.GetCollection<Geolocation>(mGeolocations);
+
+                var query = Query.And(
+                        Query.EQ("DeviceSN", deviceSN),
+                        Query.GTE("CreateDate", fromTime),
+                        Query.LTE("CreateDate", toTime));
+
+                var geolocationList = geolocations.Find(query).ToList();
+
+                result = geolocationList.ToGeoPointDto();
+            }
+            return result;
         }
 
         public IList<GeoPointDto> GetLocationsByImei(string imei, DateTime fromTime, DateTime toTime)

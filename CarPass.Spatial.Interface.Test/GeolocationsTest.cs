@@ -21,7 +21,9 @@ namespace CarPass.Spatial.Interface.Test
         [Test]
         public void TestGetLocationsByDeviceSN()
         {
-            
+            var locations = mongoGeolocations.GetLocationsByDeviceSN("000010052", new DateTime(2012, 9, 10, 0, 0, 1), new DateTime(2012, 9, 10, 23, 59, 59));
+            var count = locations.ToList().Count;
+            Assert.AreNotEqual(0, count);
         }
 
         [Test]
