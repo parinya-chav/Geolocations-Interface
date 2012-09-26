@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ServiceModel;
 
 namespace CarPass.Spatial.Interface
 {
     using CarPass.Spatial.Interface.Dto;
-    using System.ServiceModel;
 
     /// <summary>
     /// Spatial Data for Get Geolocations Service Contract
