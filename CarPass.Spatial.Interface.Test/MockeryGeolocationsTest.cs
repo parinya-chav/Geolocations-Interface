@@ -13,6 +13,7 @@ namespace CarPass.Spatial.Interface.Test
     using MongoDB.Driver.Builders;
     using MongoDB.Bson.Serialization;
     using Newtonsoft.Json;
+    using CarPass.Spatial.Services;
 
     [TestClass]
     public class MockeryGeolocationsTest
@@ -57,7 +58,7 @@ namespace CarPass.Spatial.Interface.Test
             //BsonClassMap.RegisterClassMap<Geolocation>();
 
            // places.EnsureIndex(IndexKeys.GeoSpatial("loca"));
-            var mongo = MongoServer.Create("mongodb://appsit01");
+            var mongo = MongoServer.Create("mongodb://localhost");
             var database = mongo.GetDatabase("spatial");
 
             using (mongo.RequestStart(database))
@@ -78,6 +79,15 @@ namespace CarPass.Spatial.Interface.Test
                 });
             }
 
+        }
+
+        [TestMethod]
+        public void TestGeolocationsMongoDB()
+        {
+            var geolocationsMongoDB = new GeolocationsMongoDB("localhost");
+            var locations = geolocationsMongoDB.GetLocationsByImei("13845257385757011", new DateTime(2012, 9, 10, 0, 0, 1), new DateTime(2012, 9, 10, 23, 59, 59));
+            var count = locations.ToList().Count;
+            Assert.AreNotEqual(0, count);
         }
     }
 }
