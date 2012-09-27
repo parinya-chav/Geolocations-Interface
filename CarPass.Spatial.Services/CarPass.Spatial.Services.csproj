@@ -37,6 +37,10 @@
     <AssemblyOriginatorKeyFile>CarPass.Spatial.Services.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.SqlServer.Types, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
     <Reference Include="MongoDB.Bson, Version=1.6.0.4624, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\MongoDB.Bson.dll</HintPath>
@@ -60,10 +64,12 @@
   <ItemGroup>
     <Compile Include="GeolocationsMongoDB.cs" />
     <Compile Include="GeolocationsMongoDBWriter.cs" />
+    <Compile Include="HarversineHelper.cs" />
     <Compile Include="Models\Geolocation.cs" />
     <Compile Include="Models\GeolocationExtension.cs" />
     <Compile Include="MongoDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Vector2D.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CarPass.Spatial.Interface\CarPass.Spatial.Interface.csproj">

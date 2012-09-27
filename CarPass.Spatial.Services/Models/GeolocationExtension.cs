@@ -12,6 +12,7 @@ namespace CarPass.Spatial.Services.Models
     using System.Text;
     using CarPass.Spatial.Interface.Dto;
     using Newtonsoft.Json;
+    using Microsoft.SqlServer.Types;
 
     /// <summary>
     /// TODO: Update summary.
@@ -20,7 +21,7 @@ namespace CarPass.Spatial.Services.Models
     {
         public static IList<GeoPointDto> ToGeoPointDto(this IList<Geolocation> geolocationList)
         {
-            IList<GeoPointDto> result = new List<GeoPointDto>();
+            List<GeoPointDto> result = new List<GeoPointDto>();
 
             geolocationList.ToList().ForEach(geoPointMsg =>
             {
@@ -58,6 +59,30 @@ namespace CarPass.Spatial.Services.Models
 
                 result.Add(geoPointDto);
             });
+
+            for (int i = 1; i < result.Count; i++)
+            {
+                var g1 = result[i - 1];
+                var g2 = result[i];
+
+                Vector2D l = new Vector2D
+                {
+                    X = (double)g1.Latitude,
+                    Y = (double)g1.Longitude,
+                };
+
+                Vector2D r = new Vector2D
+                {
+                    X = (double)g2.Latitude,
+                    Y = (double)g2.Longitude,
+                };
+
+                double distance = 0.0;
+                distance = HarversineHelper.Distance(l, r);
+
+                g2.HavDistanceMeters = distance;
+            }
+
             return result;
         }
 

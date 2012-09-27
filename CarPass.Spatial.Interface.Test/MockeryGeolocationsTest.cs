@@ -15,6 +15,8 @@ namespace CarPass.Spatial.Interface.Test
     using Newtonsoft.Json;
     using CarPass.Spatial.Services;
 
+    using Should.Fluent;
+
     [TestClass]
     public class MockeryGeolocationsTest
     {
@@ -81,7 +83,8 @@ namespace CarPass.Spatial.Interface.Test
             var geolocationsMongoDB = new GeolocationsMongoDB("localhost");
             var locations = geolocationsMongoDB.GetLocationsByImei("13845257385757011", new DateTime(2012, 9, 10, 0, 0, 1), new DateTime(2012, 9, 10, 23, 59, 59));
             var count = locations.ToList().Count;
-            Assert.AreNotEqual(0, count);
+
+            count.Should().Not.Equal(0);
         }
 
         [TestMethod]
@@ -90,7 +93,8 @@ namespace CarPass.Spatial.Interface.Test
             var geolocationsMongoDB = new GeolocationsMongoDB("localhost");
             var locations = geolocationsMongoDB.GetLocationsByImei("13845257385757011", new DateTime(2012, 9, 10, 0, 0, 1), new DateTime(2012, 9, 10, 23, 59, 59));
             var count = locations.ToList().Count;
-            Assert.AreNotEqual(0, count);
+            
+            count.Should().Not.Equal(0);
         }
 
         [TestMethod]
@@ -100,14 +104,23 @@ namespace CarPass.Spatial.Interface.Test
             var locations = geolocationsMongoDB.GetLocationsByDeviceSN("000010274",
                 new DateTime(2010, 7, 1, 0, 0, 1), new DateTime(2012, 9, 27, 23, 59, 59));
             var count = locations.ToList().Count;
-            Assert.AreNotEqual(0, count);
+            count.Should().Not.Equal(0);
             Console.WriteLine("Count: {0}", count);
 
             locations.ToList().ForEach(l =>
             {
-                Assert.IsInstanceOfType(l.Latitude, typeof(double));
-                Assert.IsInstanceOfType(l.Longitude, typeof(double));
+                l.HavDistanceMeters.Should().Be.InRange(0.0, double.MaxValue);
+                l.Latitude.Should().Be.AssignableFrom(typeof(double));
+                l.Longitude.Should().Be.AssignableFrom(typeof(double));
             });
+
+            for (int i = 1; i < locations.Count; i++)
+            {
+                var l = locations[i - 1];
+                var r = locations[i];
+                var diff = r.UtcTime-l.UtcTime;
+                diff.Ticks.Should().Be.InRange(default(long), long.MaxValue);
+            }
         }
 
     }

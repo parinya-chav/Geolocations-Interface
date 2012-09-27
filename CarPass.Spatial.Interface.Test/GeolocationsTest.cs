@@ -8,6 +8,7 @@ namespace CarPass.Spatial.Interface.Test
     using MbUnit.Framework;
     using CarPass.Spatial.Services;
 
+    using Should.Fluent;
     public class GeolocationsTest
     {
         private IGeolocations mongoGeolocations;
@@ -23,7 +24,8 @@ namespace CarPass.Spatial.Interface.Test
         {
             var locations = mongoGeolocations.GetLocationsByDeviceSN("000010052", new DateTime(2012, 9, 10, 0, 0, 1), new DateTime(2012, 9, 10, 23, 59, 59));
             var count = locations.ToList().Count;
-            Assert.AreNotEqual(0, count);
+
+            count.Should().Not.Equal(0);
         }
 
         [Test]
@@ -31,7 +33,8 @@ namespace CarPass.Spatial.Interface.Test
         {
             var locations = mongoGeolocations.GetLocationsByImei("13845257385757011", new DateTime(2012, 9, 10, 0, 0, 1), new DateTime(2012, 9, 10, 23, 59, 59));
             var count = locations.ToList().Count;
-            Assert.AreNotEqual(0, count);
+
+            count.Should().Not.Equal(0);
         }
 
         [Test]
@@ -41,11 +44,21 @@ namespace CarPass.Spatial.Interface.Test
                 new DateTime(2012, 9, 19, 0, 0, 1), new DateTime(2012, 9, 19, 23, 59, 59));
             var count = locations.ToList().Count;
             Assert.AreNotEqual(0, count);
+
             locations.ToList().ForEach(l =>
             {
-                Assert.IsInstanceOfType(typeof(double), l.Latitude);
-                Assert.IsInstanceOfType(typeof(double), l.Longitude);
+                l.HavDistanceMeters.Should().Be.InRange(0.0, double.MaxValue);
+                l.Latitude.Should().Be.AssignableFrom(typeof(double));
+                l.Longitude.Should().Be.AssignableFrom(typeof(double));
             });
+
+            for (int i = 1; i < locations.Count; i++)
+            {
+                var l = locations[i - 1];
+                var r = locations[i];
+                var diff = r.UtcTime - l.UtcTime;
+                diff.Ticks.Should().Be.InRange(default(long), long.MaxValue);
+            }
         }
     }
 }

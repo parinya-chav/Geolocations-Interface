@@ -68,5 +68,8 @@ namespace CarPass.Spatial.Interface.Dto
 
         [DataMember]
         public int? MapId { get; set; }
+
+        [DataMember]
+        public double HavDistanceMeters { get; set; }
     }
 }
