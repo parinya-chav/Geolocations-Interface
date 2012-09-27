@@ -20,8 +20,9 @@ namespace CarPass.Spatial.Services
         public string Server { get; internal set; }
         public int Port { get; internal set; }
 
-        protected MongoServer mMongo;
-        protected string mDatabase = "spatial";
+        public MongoServer Mongo { get; internal set; }
+
+        private string mDatabase = "spatial";
         protected string mGeolocations = "geolocations";
 
         public MongoDBContext()
@@ -40,7 +41,13 @@ namespace CarPass.Spatial.Services
         {
             Server = server;
             Port = port;
-            mMongo = MongoServer.Create("mongodb://" + Server);
+            Mongo = MongoServer.Create("mongodb://" + Server);
+        }
+
+        public MongoDatabase CreateSpatialDatabase()
+        {
+            var database = Mongo.GetDatabase(mDatabase);
+            return database;
         }
     }
 }

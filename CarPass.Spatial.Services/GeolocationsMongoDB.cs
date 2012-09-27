@@ -35,8 +35,8 @@ namespace CarPass.Spatial.Services
         public IList<GeoPointDto> GetLocationsByDeviceSN(string deviceSN, DateTime fromTime, DateTime toTime)
         {
             IList<GeoPointDto> result = null;
-            var database = mMongo.GetDatabase(mDatabase);
-            using (mMongo.RequestStart(database))
+            var database = CreateSpatialDatabase();
+            using (Mongo.RequestStart(database))
             {
                 var geolocations = database.GetCollection<Geolocation>(mGeolocations);
 
@@ -55,8 +55,8 @@ namespace CarPass.Spatial.Services
         public IList<GeoPointDto> GetLocationsByImei(string imei, DateTime fromTime, DateTime toTime)
         {
             IList<GeoPointDto> result = null;
-            var database = mMongo.GetDatabase(mDatabase);
-            using (mMongo.RequestStart(database))
+            var database = CreateSpatialDatabase();
+            using (Mongo.RequestStart(database))
             {
                 var geolocations = database.GetCollection<Geolocation>(mGeolocations);
 
