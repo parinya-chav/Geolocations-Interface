@@ -38,7 +38,7 @@ namespace CarPass.Spatial.Services
             var database = CreateSpatialDatabase();
             using (Mongo.RequestStart(database))
             {
-                var geolocations = database.GetCollection<Geolocation>(mGeolocations);
+                var geolocations = database.GetCollection<Geolocation>(Geolocations);
 
                 var query = Query.And(
                         Query.EQ("DeviceSN", deviceSN),
@@ -58,7 +58,7 @@ namespace CarPass.Spatial.Services
             var database = CreateSpatialDatabase();
             using (Mongo.RequestStart(database))
             {
-                var geolocations = database.GetCollection<Geolocation>(mGeolocations);
+                var geolocations = database.GetCollection<Geolocation>(Geolocations);
 
                 var query = Query.And(
                         Query.EQ("Imei", imei),

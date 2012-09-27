@@ -23,7 +23,7 @@ namespace CarPass.Spatial.Services
         public MongoServer Mongo { get; internal set; }
 
         private string mDatabase = "spatial";
-        protected string mGeolocations = "geolocations";
+        public string Geolocations { get; internal set; }
 
         public MongoDBContext()
             : this("localhost")
@@ -42,6 +42,7 @@ namespace CarPass.Spatial.Services
             Server = server;
             Port = port;
             Mongo = MongoServer.Create("mongodb://" + Server);
+            Geolocations = "geolocations";
         }
 
         public MongoDatabase CreateSpatialDatabase()
