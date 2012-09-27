@@ -19,7 +19,7 @@ namespace CarPass.Spatial.Interface.Test
         }
 
         [Test]
-        public void TestGetLocationsByDeviceSN()
+        public void CheckCount_GetLocationsByDeviceSN()
         {
             var locations = mongoGeolocations.GetLocationsByDeviceSN("000010052", new DateTime(2012, 9, 10, 0, 0, 1), new DateTime(2012, 9, 10, 23, 59, 59));
             var count = locations.ToList().Count;
@@ -27,11 +27,25 @@ namespace CarPass.Spatial.Interface.Test
         }
 
         [Test]
-        public void TestGetLocationsByImei()
+        public void CheckCount_GetLocationsByImei()
         {
             var locations = mongoGeolocations.GetLocationsByImei("13845257385757011", new DateTime(2012, 9, 10, 0, 0, 1), new DateTime(2012, 9, 10, 23, 59, 59));
             var count = locations.ToList().Count;
             Assert.AreNotEqual(0, count);
+        }
+
+        [Test]
+        public void FixFormatGeolocation_GetLocationsByDeviceSN()
+        {
+            var locations = mongoGeolocations.GetLocationsByDeviceSN("000010274",
+                new DateTime(2012, 9, 19, 0, 0, 1), new DateTime(2012, 9, 19, 23, 59, 59));
+            var count = locations.ToList().Count;
+            Assert.AreNotEqual(0, count);
+            locations.ToList().ForEach(l =>
+            {
+                Assert.IsInstanceOfType(typeof(double), l.Latitude);
+                Assert.IsInstanceOfType(typeof(double), l.Longitude);
+            });
         }
     }
 }

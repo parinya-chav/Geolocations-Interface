@@ -14,6 +14,8 @@ namespace CarPass.Spatial.Services.Models
     using MongoDB.Bson.Serialization;
     using CarPass.Spatial.Interface.Dto;
     using Newtonsoft.Json;
+    using MongoDB.Bson.Serialization.Options;
+    using MongoDB.Bson;
 
     /// <summary>
     /// TODO: Update summary.
@@ -22,7 +24,7 @@ namespace CarPass.Spatial.Services.Models
     {
         [BsonId]
         public string Id { get; set; }
-        public short Altitude { get; set; }
+        public int Altitude { get; set; }
 
         /// <summary>
         /// GPS Time From Geopoint
@@ -36,9 +38,9 @@ namespace CarPass.Spatial.Services.Models
         public string Imei { get; set; }
 
         [BsonElement("GroundSpeed")]
-        public ushort Groundspeed { get; set; }
+        public int Groundspeed { get; set; }
         public decimal Hdop { get; set; }
-        public ushort Heading { get; set; }
+        public int Heading { get; set; }
         public int JourneyId { get; set; }
 
         public int Seq { get; set; }
@@ -50,7 +52,7 @@ namespace CarPass.Spatial.Services.Models
         /// From Message Header
         /// </summary>
         public DateTime HeaderTime { get; set; }
-        public byte NumberOfSatellitesUsed { get; set; }
+        public int NumberOfSatellitesUsed { get; set; }
 
         [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         public DateTime LocalUtcTime { get; set; }
@@ -59,6 +61,6 @@ namespace CarPass.Spatial.Services.Models
         public string DeviceSN { get; set; }
 
         [BsonElement("loc")]
-        public string Location { get; internal set; }
+        public string LocationJson { get; set; }
     }
 }

@@ -32,8 +32,8 @@ namespace CarPass.Spatial.Interface.Test
                 {
                     DeviceSn = "000010274",
                     Imei = "352848024123388",
-                    Latitude = 0.1M,
-                    Longitude = 0.2M,
+                    Latitude = 0.1,
+                    Longitude = 0.2,
                 });
 
             Expect.Once.On(mocksGeolocations)
@@ -71,18 +71,12 @@ namespace CarPass.Spatial.Interface.Test
                         Query.LTE("CreateDate", new DateTime(2012, 9, 10, 23, 59, 59)));
 
                 var c = geolocations.Find(query).ToList();
-
-                c.ForEach(d =>
-                {
-                    dynamic loc = JsonConvert.DeserializeObject(d.Location);
-                    Console.WriteLine("{0}", loc.lat);
-                });
             }
 
         }
 
         [TestMethod]
-        public void TestGetLocationsByImei()
+        public void CheckCount_GetLocationsByImei()
         {
             var geolocationsMongoDB = new GeolocationsMongoDB("localhost");
             var locations = geolocationsMongoDB.GetLocationsByImei("13845257385757011", new DateTime(2012, 9, 10, 0, 0, 1), new DateTime(2012, 9, 10, 23, 59, 59));
@@ -91,12 +85,27 @@ namespace CarPass.Spatial.Interface.Test
         }
 
         [TestMethod]
-        public void TestGetLocationsByDeviceSN()
+        public void CheckCount_GetLocationsByDeviceSN()
         {
             var geolocationsMongoDB = new GeolocationsMongoDB("localhost");
-            var locations = geolocationsMongoDB.GetLocationsByDeviceSN("000010052", new DateTime(2012, 9, 10, 0, 0, 1), new DateTime(2012, 9, 10, 23, 59, 59));
+            var locations = geolocationsMongoDB.GetLocationsByImei("13845257385757011", new DateTime(2012, 9, 10, 0, 0, 1), new DateTime(2012, 9, 10, 23, 59, 59));
             var count = locations.ToList().Count;
             Assert.AreNotEqual(0, count);
+        }
+
+        [TestMethod]
+        public void FixFormatGeolocation_GetLocationsByDeviceSN()
+        {
+            var geolocationsMongoDB = new GeolocationsMongoDB("localhost");
+            var locations = geolocationsMongoDB.GetLocationsByDeviceSN("000010274",
+                new DateTime(2012, 9, 19, 0, 0, 1), new DateTime(2012, 9, 19, 23, 59, 59));
+            var count = locations.ToList().Count;
+            Assert.AreNotEqual(0, count);
+            locations.ToList().ForEach(l =>
+            {
+                Assert.IsInstanceOfType(l.Latitude, typeof(double));
+                Assert.IsInstanceOfType(l.Longitude, typeof(double));
+            });
         }
     }
 }

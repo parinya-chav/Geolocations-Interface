@@ -33,6 +33,9 @@
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>CarPass.Spatial.Services.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MongoDB.Bson, Version=1.6.0.4624, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -56,8 +59,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GeolocationsMongoDB.cs" />
+    <Compile Include="GeolocationsMongoDBWriter.cs" />
     <Compile Include="Models\Geolocation.cs" />
     <Compile Include="Models\GeolocationExtension.cs" />
+    <Compile Include="MongoDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -66,7 +71,9 @@
       <Name>CarPass.Spatial.Interface</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="CarPass.Spatial.Services.snk" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="lib\MongoDB.Bson.dll" />
     <Content Include="lib\MongoDB.Driver.dll" />

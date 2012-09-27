@@ -11,32 +11,25 @@ namespace CarPass.Spatial.Services
     using CarPass.Spatial.Services.Models;
     using MongoDB.Driver.Builders;
 
-    public class GeolocationsMongoDB : IGeolocations
+    public class GeolocationsMongoDB :MongoDBContext, IGeolocations
     {
-        public string Server { get; internal set; }
-        public int Port { get; internal set; }
-
-        MongoServer mMongo;
-        string mDatabase = "spatial";
-        string mGeolocations = "geolocations";
 
         public GeolocationsMongoDB()
-            : this("localhost")
+            : base("localhost")
         {
             
         }
 
         public GeolocationsMongoDB(string server)
-            : this(server, 27017)
+            : base(server, 27017)
         {
             
         }
 
         public GeolocationsMongoDB(string server, int port)
+            : base(server, port)
         {
-            Server = server;
-            Port = port;
-            mMongo = MongoServer.Create("mongodb://" + Server);
+            
         }
 
         public IList<GeoPointDto> GetLocationsByDeviceSN(string deviceSN, DateTime fromTime, DateTime toTime)

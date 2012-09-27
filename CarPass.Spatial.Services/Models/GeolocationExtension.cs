@@ -24,8 +24,13 @@ namespace CarPass.Spatial.Services.Models
 
             geolocationList.ToList().ForEach(geoPointMsg =>
             {
+                //dynamic loc = JsonConvert.DeserializeObject<dynamic>(geoPointMsg.Location);
 
-                dynamic loc = JsonConvert.DeserializeObject(geoPointMsg.Location);
+                var loc = geoPointMsg.LocationJson;
+                var locDoc = loc.Replace("0E-19", "0");
+                dynamic locJson = JsonConvert.DeserializeObject(locDoc);
+                double lat = locJson.lat;
+                double lon = locJson.lon;
 
                 var geoPointDto = new GeoPointDto
                 {
@@ -33,12 +38,12 @@ namespace CarPass.Spatial.Services.Models
                     UniqueJournyId = (ushort)geoPointMsg.JourneyId,
                     Seq = geoPointMsg.Seq,
 
-                    Latitude = loc.lat,
-                    Longitude = loc.lon,
+                    Latitude = lat,
+                    Longitude = lon,
 
                     Altitude = geoPointMsg.Altitude,
                     Groundspeed = geoPointMsg.Groundspeed,
-                    NumberOfSatellitesUsed = geoPointMsg.NumberOfSatellitesUsed,
+                    NumberOfSatellitesUsed = (byte)geoPointMsg.NumberOfSatellitesUsed,
                     Heading = geoPointMsg.Heading,
                     CreateDate = geoPointMsg.CreateDate,
 

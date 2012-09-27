@@ -31,22 +31,22 @@ namespace CarPass.Spatial.Interface.Dto
         public DateTime UtcTime { get; set; }
 
         [DataMember]
-        public decimal Latitude { get; set; }
+        public double Latitude { get; set; }
 
         [DataMember]
-        public decimal Longitude { get; set; }
+        public double Longitude { get; set; }
 
         [DataMember]
-        public short Altitude { get; set; }
+        public int Altitude { get; set; }
 
         [DataMember]
-        public ushort Groundspeed { get; set; }
+        public int Groundspeed { get; set; }
 
         [DataMember]
         public byte NumberOfSatellitesUsed { get; set; }
 
         [DataMember]
-        public ushort Heading { get; set; }
+        public int Heading { get; set; }
 
         [DataMember]
         public DateTime CreateDate { get; set; }
