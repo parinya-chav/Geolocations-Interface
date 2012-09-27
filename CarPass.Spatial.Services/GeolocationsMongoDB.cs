@@ -45,7 +45,7 @@ namespace CarPass.Spatial.Services
                         Query.GTE("CreateDate", fromTime),
                         Query.LTE("CreateDate", toTime));
 
-                var geolocationList = geolocations.Find(query).OrderBy(g=>g.UtcTime).ToList();
+                var geolocationList = geolocations.Find(query).OrderBy(g => g.HeaderTime).ToList();
 
                 result = geolocationList.ToGeoPointDto();
             }
@@ -65,7 +65,7 @@ namespace CarPass.Spatial.Services
                         Query.GTE("CreateDate", fromTime),
                         Query.LTE("CreateDate", toTime));
 
-                var geolocationList = geolocations.Find(query).OrderBy(g => g.UtcTime).ToList();
+                var geolocationList = geolocations.Find(query).OrderBy(g => g.HeaderTime).ToList();
 
                 result = geolocationList.ToGeoPointDto();
             }
