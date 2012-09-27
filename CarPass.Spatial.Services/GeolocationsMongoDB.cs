@@ -21,7 +21,7 @@ namespace CarPass.Spatial.Services
         string mGeolocations = "geolocations";
 
         public GeolocationsMongoDB()
-            : this("localhost", 27017)
+            : this("localhost")
         {
             
         }
