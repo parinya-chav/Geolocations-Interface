@@ -43,7 +43,7 @@ namespace CarPass.Spatial.Interface.Test
             var locations = mongoGeolocations.GetLocationsByDeviceSN("000010274",
                 new DateTime(2012, 9, 19, 0, 0, 1), new DateTime(2012, 9, 19, 23, 59, 59));
             var count = locations.ToList().Count;
-            Assert.AreNotEqual(0, count);
+            count.Should().Not.Equal(0);
 
             locations.ToList().ForEach(l =>
             {
