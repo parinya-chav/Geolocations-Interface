@@ -96,7 +96,7 @@ namespace CarPass.Spatial.Interface.Test
         [TestMethod]
         public void FixFormatGeolocation_GetLocationsByDeviceSN()
         {
-            var geolocationsMongoDB = new GeolocationsMongoDB("appsit01");
+            var geolocationsMongoDB = new GeolocationsMongoDB("localhost");
             var locations = geolocationsMongoDB.GetLocationsByDeviceSN("000010274",
                 new DateTime(2010, 7, 1, 0, 0, 1), new DateTime(2012, 9, 27, 23, 59, 59));
             var count = locations.ToList().Count;

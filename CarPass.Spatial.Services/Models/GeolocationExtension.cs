@@ -24,8 +24,6 @@ namespace CarPass.Spatial.Services.Models
 
             geolocationList.ToList().ForEach(geoPointMsg =>
             {
-                //dynamic loc = JsonConvert.DeserializeObject<dynamic>(geoPointMsg.Location);
-
                 var loc = geoPointMsg.LocationJson;
                 var locDoc = loc.Replace("0E-19", "0");
                 dynamic locJson = JsonConvert.DeserializeObject(locDoc);
