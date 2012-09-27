@@ -28,6 +28,9 @@ namespace CarPass.Spatial.Interface.Dto
         public ushort UniqueJournyId { get; set; }
 
         [DataMember]
+        public DateTime HeaderTime { get; set; }
+
+        [DataMember]
         public DateTime UtcTime { get; set; }
 
         [DataMember]

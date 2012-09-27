@@ -56,7 +56,7 @@ namespace CarPass.Spatial.Interface.Test
             {
                 var l = locations[i - 1];
                 var r = locations[i];
-                var diff = r.UtcTime - l.UtcTime;
+                var diff = r.HeaderTime - l.HeaderTime;
                 diff.Ticks.Should().Be.InRange(default(long), long.MaxValue);
             }
         }

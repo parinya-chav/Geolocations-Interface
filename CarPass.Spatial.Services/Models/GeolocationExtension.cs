@@ -33,6 +33,7 @@ namespace CarPass.Spatial.Services.Models
 
                 var geoPointDto = new GeoPointDto
                 {
+                    HeaderTime = geoPointMsg.HeaderTime,
                     DeviceSn = geoPointMsg.DeviceSN,
                     UniqueJournyId = (ushort)geoPointMsg.JourneyId,
                     Seq = geoPointMsg.Seq,
@@ -55,6 +56,8 @@ namespace CarPass.Spatial.Services.Models
 
                     MapId = geoPointMsg.MapId,
 
+                    Imei = geoPointMsg.Imei,
+                    
                 };
 
                 result.Add(geoPointDto);
