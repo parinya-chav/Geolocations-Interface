@@ -13,6 +13,8 @@ namespace CarPass.Spatial.Services
 
     using CarPass.Spatial.Interface;
     using CarPass.Spatial.Interface.Dto;
+    using CarPass.Spatial.Services.Models;
+    using MongoDB.Driver.Builders;
 
     /// <summary>
     /// TODO: Update summary.
@@ -39,7 +41,16 @@ namespace CarPass.Spatial.Services
 
         public int SaveGeoPointDto(GeoPointDto geopoint)
         {
-            throw new NotImplementedException();
+            var database = CreateSpatialDatabase();
+            using (Mongo.RequestStart(database))
+            {
+                var geolocations = database.GetCollection<Geolocation>(Geolocations);
+                var geolocation = geopoint.ToGeolocation();
+                geolocations.Save(geolocation);
+
+                geolocations.EnsureIndex(IndexKeys.GeoSpatial("loc"));
+            }
+            return 1; 
         }
     }
 }

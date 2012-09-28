@@ -16,6 +16,9 @@ namespace CarPass.Spatial.Interface.Dto
     public class GeoPointDto
     {
         [DataMember]
+        public string Id { get; set; }
+
+        [DataMember]
         public string Imei { get; set; }
 
         [DataMember]
@@ -62,6 +65,9 @@ namespace CarPass.Spatial.Interface.Dto
 
         [DataMember]
         public string VehicleState { get; set; }
+
+        [DataMember]
+        public string PacketId { get; set; }
 
         [DataMember]
         public string FromMessage { get; set; }

@@ -12,11 +12,12 @@ namespace CarPass.Spatial.Interface.Test
     public class GeolocationsTest
     {
         private IGeolocations mongoGeolocations;
+        string server = "localhost";
 
         [SetUp]
         public void SetUp()
         {
-            mongoGeolocations = new GeolocationsMongoDB("localhost");
+            mongoGeolocations = new GeolocationsMongoDB(server);
         }
 
         [Test]

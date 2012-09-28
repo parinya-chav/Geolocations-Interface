@@ -22,6 +22,7 @@ namespace CarPass.Spatial.Interface.Test
     {
         private Mockery mocks;
         private IGeolocations mocksGeolocations;
+        string server = "localhost";
 
         [TestInitialize]
         public void SetUp()
@@ -60,7 +61,7 @@ namespace CarPass.Spatial.Interface.Test
             //BsonClassMap.RegisterClassMap<Geolocation>();
 
            // places.EnsureIndex(IndexKeys.GeoSpatial("loca"));
-            var mongo = MongoServer.Create("mongodb://localhost");
+            var mongo = MongoServer.Create("mongodb://" + server);
             var database = mongo.GetDatabase("spatial");
 
             using (mongo.RequestStart(database))
@@ -80,7 +81,7 @@ namespace CarPass.Spatial.Interface.Test
         [TestMethod]
         public void CheckCount_GetLocationsByImei()
         {
-            var geolocationsMongoDB = new GeolocationsMongoDB("localhost");
+            var geolocationsMongoDB = new GeolocationsMongoDB(server);
             var locations = geolocationsMongoDB.GetLocationsByImei("13845257385757011", new DateTime(2012, 9, 10, 0, 0, 1), new DateTime(2012, 9, 10, 23, 59, 59));
             var count = locations.ToList().Count;
 
@@ -90,8 +91,8 @@ namespace CarPass.Spatial.Interface.Test
         [TestMethod]
         public void CheckCount_GetLocationsByDeviceSN()
         {
-            var geolocationsMongoDB = new GeolocationsMongoDB("localhost");
-            var locations = geolocationsMongoDB.GetLocationsByImei("13845257385757011", new DateTime(2012, 9, 10, 0, 0, 1), new DateTime(2012, 9, 10, 23, 59, 59));
+            var geolocationsMongoDB = new GeolocationsMongoDB(server);
+            var locations = geolocationsMongoDB.GetLocationsByImei("13845257385757011", new DateTime(2012, 9, 28, 0, 0, 1), new DateTime(2012, 9, 28, 23, 59, 59));
             var count = locations.ToList().Count;
             
             count.Should().Not.Equal(0);
@@ -100,7 +101,7 @@ namespace CarPass.Spatial.Interface.Test
         [TestMethod]
         public void FixFormatGeolocation_GetLocationsByDeviceSN()
         {
-            var geolocationsMongoDB = new GeolocationsMongoDB("appsit01");
+            var geolocationsMongoDB = new GeolocationsMongoDB(server);
             var locations = geolocationsMongoDB.GetLocationsByDeviceSN("000010274",
                 new DateTime(2010, 7, 1, 0, 0, 1), new DateTime(2012, 9, 27, 23, 59, 59));
             var count = locations.ToList().Count;

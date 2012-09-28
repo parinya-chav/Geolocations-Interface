@@ -33,6 +33,8 @@ namespace CarPass.Spatial.Services.Models
 
                 var geoPointDto = new GeoPointDto
                 {
+                    Id = geoPointMsg.Id,
+
                     HeaderTime = geoPointMsg.HeaderTime,
                     DeviceSn = geoPointMsg.DeviceSN,
                     UniqueJournyId = (ushort)geoPointMsg.JourneyId,
@@ -53,6 +55,7 @@ namespace CarPass.Spatial.Services.Models
 
                     FromMessage = geoPointMsg.Message,
                     FromMessageJson = geoPointMsg.MessageJson,
+                    PacketId = geoPointMsg.PacketId,
 
                     MapId = geoPointMsg.MapId,
 
@@ -88,6 +91,39 @@ namespace CarPass.Spatial.Services.Models
 
             return result;
         }
+        public static Geolocation ToGeolocation(this GeoPointDto geoPointDto)
+        {
+            dynamic location = new { lat = geoPointDto.Latitude, lon = geoPointDto.Longitude };
+            string locationJson = JsonConvert.SerializeObject(location);
+            Geolocation geolocation = new Geolocation
+            {
+                Id = geoPointDto.Id,
+                
+                PacketId = geoPointDto.PacketId,
+                HeaderTime = geoPointDto.HeaderTime,
+                DeviceSN = geoPointDto.DeviceSn,
+                JourneyId = geoPointDto.UniqueJournyId,
+                Seq = geoPointDto.Seq,
 
+                Altitude = geoPointDto.Altitude,
+                Groundspeed = geoPointDto.Groundspeed,
+                NumberOfSatellitesUsed = (byte)geoPointDto.NumberOfSatellitesUsed,
+                Heading = geoPointDto.Heading,
+                CreateDate = geoPointDto.CreateDate,
+
+                UtcTime = geoPointDto.UtcTime,
+
+
+                Message = geoPointDto.FromMessage,
+                MessageJson = geoPointDto.FromMessageJson,
+
+                MapId = geoPointDto.MapId.GetValueOrDefault(),
+
+                Imei = geoPointDto.Imei,
+                LocationJson = locationJson,
+            };
+
+            return geolocation;
+        }
     }
 }
