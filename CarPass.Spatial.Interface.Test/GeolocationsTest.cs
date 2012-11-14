@@ -12,7 +12,7 @@ namespace CarPass.Spatial.Interface.Test
     public class GeolocationsTest
     {
         private IGeolocations mongoGeolocations;
-        string server = "localhost";
+        string server = "appsit01";
 
         [SetUp]
         public void SetUp()
@@ -23,10 +23,12 @@ namespace CarPass.Spatial.Interface.Test
         [Test]
         public void CheckCount_GetLocationsByDeviceSN()
         {
-            var locations = mongoGeolocations.GetLocationsByDeviceSN("000010052", new DateTime(2012, 9, 10, 0, 0, 1), new DateTime(2012, 9, 10, 23, 59, 59));
-            var count = locations.ToList().Count;
+            var locations = mongoGeolocations.GetLocationsByDeviceSN("000010274", new DateTime(2012, 10, 1, 0, 0, 1), new DateTime(2012, 10, 1, 23, 59, 59));
+            var totalCount = locations.ToList().Count;
+            var onlyGeoPointCount = locations.Where(g => g.FromMessage == "GeoPoint").ToList().Count;
 
-            count.Should().Not.Equal(0);
+            totalCount.Should().Not.Equal(0);
+            (totalCount >= onlyGeoPointCount).Should().Equal(true);
         }
 
         [Test]

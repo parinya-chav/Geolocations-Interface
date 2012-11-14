@@ -34,5 +34,6 @@ namespace CarPass.Spatial.Interface
         [OperationContract]
         IList<GeoPointDto> GetLocationsByImei(string imei, DateTime fromTime, DateTime toTime);
 
+
     }
 }

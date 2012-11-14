@@ -22,7 +22,7 @@ namespace CarPass.Spatial.Interface.Test
     {
         private Mockery mocks;
         private IGeolocations mocksGeolocations;
-        string server = "localhost";
+        string server = "appsit01";
 
         [TestInitialize]
         public void SetUp()
@@ -92,10 +92,12 @@ namespace CarPass.Spatial.Interface.Test
         public void CheckCount_GetLocationsByDeviceSN()
         {
             var geolocationsMongoDB = new GeolocationsMongoDB(server);
-            var locations = geolocationsMongoDB.GetLocationsByImei("13845257385757011", new DateTime(2012, 9, 28, 0, 0, 1), new DateTime(2012, 9, 28, 23, 59, 59));
-            var count = locations.ToList().Count;
-            
-            count.Should().Not.Equal(0);
+            var locations = geolocationsMongoDB.GetLocationsByImei("352848024123388", new DateTime(2012, 10, 1, 0, 0, 1), new DateTime(2012, 10, 1, 23, 59, 59));
+            var totalCount = locations.ToList().Count;
+            var onlyGeoPointCount = locations.Where( g => g.FromMessage == "GeoPoint").ToList().Count;
+
+            totalCount.Should().Not.Equal(0);
+            (totalCount >= onlyGeoPointCount).Should().Equal(true);
         }
 
         [TestMethod]
@@ -103,16 +105,19 @@ namespace CarPass.Spatial.Interface.Test
         {
             var geolocationsMongoDB = new GeolocationsMongoDB(server);
             var locations = geolocationsMongoDB.GetLocationsByDeviceSN("000010274",
-                new DateTime(2010, 7, 1, 0, 0, 1), new DateTime(2012, 9, 27, 23, 59, 59));
+                new DateTime(2010, 7, 1, 0, 0, 1), new DateTime(2012, 9, 28, 23, 59, 59));
             var count = locations.ToList().Count;
             count.Should().Not.Equal(0);
             Console.WriteLine("Count: {0}", count);
 
+            double distance = 0;
             locations.ToList().ForEach(l =>
             {
                 l.HavDistanceMeters.Should().Be.InRange(0.0, double.MaxValue);
                 l.Latitude.Should().Be.AssignableFrom(typeof(double));
                 l.Longitude.Should().Be.AssignableFrom(typeof(double));
+
+                distance += l.HavDistanceMeters;
             });
 
             for (int i = 1; i < locations.Count; i++)
@@ -122,6 +127,8 @@ namespace CarPass.Spatial.Interface.Test
                 var diff = r.HeaderTime - l.HeaderTime;
                 diff.Ticks.Should().Be.InRange(default(long), long.MaxValue);
             }
+
+            Console.WriteLine("HavDistanceMeters: {0}", distance);
         }
 
     }

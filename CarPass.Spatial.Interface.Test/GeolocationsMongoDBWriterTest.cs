@@ -16,7 +16,7 @@ namespace CarPass.Spatial.Interface.Test
     {
         IGeolocationsWriter writer;
         IGeolocations reader;
-        string server = "localhost";
+        string server = "appsit01";
 
         [TestInitialize]
         public void SetUp()
@@ -28,21 +28,24 @@ namespace CarPass.Spatial.Interface.Test
         [TestMethod]
         public void TestSaveDevice_IMEI_13845257385757011()
         {
+            string imei = "13845257385757011";
+            string deviceSn = "000010052";
+
             var newGeoPointDto = new GeoPointDto
             {
                 Id = Guid.NewGuid().ToString(),
-                Imei = "13845257385757011",
-                DeviceSn = "000010052",
+                Imei = imei,
+                DeviceSn = deviceSn,
                 Latitude = 13.7253520,
                 Longitude = 100.5794770,
                 HeaderTime = DateTime.UtcNow,
                 CreateDate = DateTime.Now,
             };
 
-            var locations = reader.GetLocationsByImei("13845257385757011", new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 1), new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59));
+            var locations = reader.GetLocationsByImei(imei, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 1), new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59));
             var count1 = locations.ToList().Count;
             writer.SaveGeoPointDto(newGeoPointDto);
-            locations = reader.GetLocationsByImei("13845257385757011", new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 1), new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59));
+            locations = reader.GetLocationsByImei(imei, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 1), new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59));
             var count2 = locations.ToList().Count;
 
             var ge = count2 > count1;
